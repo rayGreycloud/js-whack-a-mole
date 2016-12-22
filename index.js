@@ -1,8 +1,11 @@
 const holes = document.querySelectorAll('.hole');
 const scoreBoard = document.querySelector('.score');
 const moles = document.querySelectorAll('.mole');
+const hitSound = document.querySelector('.hit');
+
 let lastHole;
 let timeUp = false;
+let score = 0;
 
 function randomTime(min, max) {
   return Math.random() * (max - min) + min;
@@ -31,8 +34,19 @@ function popUp() {
 function startGame() {
   scoreBoard.textContent = 0;
   timeUp = false;
+  score = 0;
   popUp();
   setTimeout(() => {
     timeUp = true;
   }, 10000);
 }
+
+function whack(e) {
+  if (!e.isTrusted) return; // cheater using console
+  score++;
+  this.classList.remove('up');
+  hitSound.play();
+  scoreBoard.textContent = score;
+}
+
+moles.forEach(mole => mole.addEventListener('click', whack));
