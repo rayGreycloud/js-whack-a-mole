@@ -19,11 +19,20 @@ function randomHole(holes) {
 }
 
 function popUp() {
-  const time = randomTime(400, 1100);
+  const time = randomTime(400, 1000);
   const hole = randomHole(holes);
   hole.classList.add('up');
   setTimeout(() => {
     hole.classList.remove('up');
     if (!timeUp) popUp();
   }, time);
+}
+
+function startGame() {
+  scoreBoard.textContent = 0;
+  timeUp = false;
+  popUp();
+  setTimeout(() => {
+    timeUp = true;
+  }, 10000);
 }
